@@ -64,13 +64,11 @@ const ShowNewsItem = (Items) => {
                     <div>
                         <p>${item.author.name === null || item.author.name === ""
                 ? `Information not found`
-                : item.author.name
-            }</p>
+                : item.author.name}</p>
                         <p>${item.author.published_date}</p>
                     </div>
                 </div>
-                <div><i class="fa-regular fa-eye me-2"></i>${item.total_view === null ? ` Not found` : item.total_view
-            }</div>
+                <div><i class="fa-regular fa-eye me-2"></i>${item.total_view === null ? ` Not found` : item.total_view}</div>
                 <div>
                     <i class="fa-regular fa-star-half-stroke"></i>
                     <i class="fa-regular fa-star"></i>
@@ -78,8 +76,7 @@ const ShowNewsItem = (Items) => {
                     <i class="fa-regular fa-star"></i>
                     <i class="fa-regular fa-star"></i>
                 </div>
-                <button onclick= "showDetail('${item._id
-            }')" class="btn btn-info text-white" data-bs-toggle="modal"
+                <button onclick= "showDetail('${item._id}')" class="btn btn-info text-white" data-bs-toggle="modal"
                   data-bs-target="#newsModal">See More</button>    
                         </div>
                     </div>
@@ -110,5 +107,57 @@ const preloader = (isLoading) => {
 };
 
 
+///////load details////
+const showDetail = async (id) => {
+    const url = `https://openapi.programming-hero.com/api/news/${id}`
+    const res = await fetch(url)
+    const data = await res.json();
+    showModal(data.data[0]);
+
+}
+
+////add modal ////////////
+const showModal = (news) => {
+    console.log(news);
+    const modalContainer = document.getElementById("modal-container");
+
+    modalContainer.innerHTML = `
+    <div class="modal-header">
+    <h5 class="modal-title" id="newsModalLabel">${news.title}</h5>
+    <img style="height: 200px; width: 200px;" src="${news.image_url}" >
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">${news.details}</div>
+  <div class="modal-footer d-flex justify-content-between ">
+  
+      <div> 
+      <img class="rounded-circle" style="height: 50px; width: 50px;" src="${news.author.img
+        }" alt=""> 
+      <p>${news.author.name === null || news.author.name === ""
+            ? `Information not found`
+            : news.author.name
+        }</p>
+      </div>
+  
+      <div>
+      <div><i class="fa-regular fa-eye me-2"></i>${news.total_view === null ? `Information not found` : news.total_view
+        }</div>
+      </div>
+  
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-bs-dismiss="modal"
+    >
+      Close
+    </button>
+  </div>
+    `;
+};
 
 
