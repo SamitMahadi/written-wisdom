@@ -20,17 +20,19 @@ const displayCategories = (Categories) => {
         `;
         categoriesContainers.appendChild(CategoryDiv);
     });
+
 }
 
 // //////////load dynamic api for category///////
 const ShowNews = async (id) => {
+    preloader(true)
     const url = `https://openapi.programming-hero.com/api/news/category/${id}`
     const res = await fetch(url)
     const data = await res.json();
     ShowNewsItem(data.data);
-    preloader(true)
-}
 
+
+}
 
 ///////Show Newss////////////
 
@@ -87,11 +89,11 @@ const ShowNewsItem = (Items) => {
 
         `;
         newsItems.appendChild(div);
-        preloader(false);
+
     });
 
 
-
+    preloader(false)
 
 
 }
@@ -118,7 +120,7 @@ const showDetail = async (id) => {
 
 ////add modal ////////////
 const showModal = (news) => {
-    console.log(news);
+
     const modalContainer = document.getElementById("modal-container");
 
     modalContainer.innerHTML = `
@@ -136,22 +138,17 @@ const showModal = (news) => {
   <div class="modal-footer d-flex justify-content-between ">
   
       <div> 
-      <img class="rounded-circle" style="height: 50px; width: 50px;" src="${news.author.img
-        }" alt=""> 
-      <p>${news.author.name === null || news.author.name === ""
-            ? `Information not found`
-            : news.author.name
-        }</p>
+      <img class="rounded-circle" style="height: 50px; width: 50px;" src="${news.author.img}" alt=""> 
+      <p>${news.author.name === null || news.author.name === "" ? `Information not found` : news.author.name}</p>
       </div>
   
       <div>
-      <div><i class="fa-regular fa-eye me-2"></i>${news.total_view === null ? `Information not found` : news.total_view
-        }</div>
+      <div><i class="fa-regular fa-eye me-2"></i>${news.total_view === null ? `Information not found` : news.total_view}</div>
       </div>
   
     <button
       type="button"
-      class="btn btn-secondary"
+      class="btn btn-danger"
       data-bs-dismiss="modal"
     >
       Close
