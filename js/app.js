@@ -28,6 +28,7 @@ const ShowNews = async (id) => {
     const res = await fetch(url)
     const data = await res.json();
     ShowNewsItem(data.data);
+    preloader(true)
 }
 
 
@@ -52,14 +53,13 @@ const ShowNewsItem = (Items) => {
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">${item.title}</h5>
-                            <p class="card-text">${item.details.substring(0, 200)}...</p>
+                            <p class="card-text">${item.details.substring(0, 400)}...</p>
 
 
                                 <div class="d-md-flex text-center align-items-center justify-content-between">
-                <div class="d-flex align-items-center">
-                    <div class="me-2">
-                        <img class="rounded-circle" style="height: 50px; width: 50px;" src="${item.author.img
-            }" alt="">
+                              <div class="d-flex align-items-center">
+                               <div class="me-2">
+                              <img class="rounded-circle" style="height: 50px; width: 50px;" src="${item.author.img}" alt="">
                     </div>
                     <div>
                         <p>${item.author.name === null || item.author.name === ""
@@ -90,11 +90,24 @@ const ShowNewsItem = (Items) => {
 
         `;
         newsItems.appendChild(div);
+        preloader(false);
     });
 
 
 
+
+
 }
+
+//////////preeeloader/////
+const preloader = (isLoading) => {
+    const preloader = document.getElementById("preloader");
+    if (isLoading) {
+        preloader.classList.remove("d-none");
+    } else {
+        preloader.classList.add("d-none");
+    }
+};
 
 
 
